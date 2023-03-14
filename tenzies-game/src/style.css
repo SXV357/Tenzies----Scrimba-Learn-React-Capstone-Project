@@ -43,6 +43,7 @@ main{
   height: 700px;
   margin: 0 auto;
   display: flex;
+  padding: 7.5px;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
@@ -135,6 +136,7 @@ main{
   align-items: center;
 }
 
+/*2*/
 .two{
   display: flex;
   gap: 20px;
@@ -145,6 +147,7 @@ main{
   align-self: flex-end;
 }
 
+/*3*/
 .three{
   display: flex;
   gap: 8px;
@@ -163,6 +166,7 @@ main{
   align-self: flex-end;
 }
 
+/*4 + 5 + 6*/
 .four,
 .six,
 .five {
@@ -194,4 +198,26 @@ main{
 
 .five .column:nth-of-type(1){
   gap: 25px;
+}
+
+
+/*Media Queries*/
+@media (max-width: 855px){
+  main {
+    margin: 0 auto;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 708px){
+  .die {
+  width: 40px;
+  height: 40px;
+  padding: 30px;
+  }
+
+  .dot {
+    width: 12px;
+    height: 12px;
+  }
 }

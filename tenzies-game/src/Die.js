@@ -1,14 +1,13 @@
 import React from "react";
 
-export default function Die(props){
+export default function Die({ isHeld, value, handleClick, id }) {
+  const styles = {
+    backgroundColor: isHeld ? "#59E391" : "#FFFFFF",
+  };
 
-    const styles = {
-        backgroundColor: props.isHeld ? "#59E391" : "#FFFFFF",
-    }
-
-    function determineDots(){
-        switch(props.value){
-            case 1:
+  function determineDots() {
+    switch (value) {
+      case 1:
         return (
           <div className="one" style={styles}>
             <span className="dot"></span>
@@ -74,9 +73,11 @@ export default function Die(props){
             </div>
           </div>
         );
-        }
     }
-    return(
-        <div onClick = {() => props.handleClick(props.id)} style = {styles} className = "die">{determineDots()}</div>
-    )
+  }
+  return (
+    <div onClick={() => handleClick(id)} style={styles} className="die">
+      {determineDots()}
+    </div>
+  );
 }
