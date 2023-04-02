@@ -5,6 +5,10 @@ export default function Die({ isHeld, value, handleClick, id }) {
     backgroundColor: isHeld ? "#59E391" : "#FFFFFF",
   };
 
+  // The high-level design pattern for flex-box based dice in CSS was borrowed from the following source:
+  // https://betterprogramming.pub/creating-dice-in-flexbox-in-css-a02a5d85e516
+
+  // Many modifications were made to the styling rules in the css file, including ones related to structure and workflow optimization
   function determineDots() {
     switch (value) {
       case 1:

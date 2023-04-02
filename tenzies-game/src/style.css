@@ -4,32 +4,32 @@
 
 body {
   margin: 0;
-  background-color: #0B2434;
+  background-color: #0b2434;
   padding: 35px;
 }
 
-.title{
-  color: #2B283A;
+.title {
+  color: #2b283a;
   font-size: 2.5em;
-  font-family: 'Karla', sans-serif;
+  font-family: "Karla", sans-serif;
 }
 
-.instructions{
-  color: #4A4E74;
+.instructions {
+  color: #4a4e74;
   font-size: 1.5em;
   margin-top: auto;
   font-weight: 650;
-  font-family: 'Karla', sans-serif;
+  font-family: "Karla", sans-serif;
 }
 
-.num-rolls{
+.num-rolls {
   margin-bottom: 42px;
   font-size: 1.5em;
   font-weight: 700;
-  font-family: 'Karla', sans-serif;
+  font-family: "Karla", sans-serif;
 }
 
-.description{
+.description {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -37,7 +37,7 @@ body {
   text-align: center;
 }
 
-main{
+main {
   background-color: rgba(250, 249, 246, 0.9);
   width: 800px;
   height: 700px;
@@ -51,32 +51,31 @@ main{
   position: relative;
 }
 
-.timer{
+.timer {
   margin-bottom: 17px;
   transform: scale(1.5);
   font-weight: 750;
 }
 
-.timer-btns{
+.timer-btns {
   display: flex;
   gap: 12px;
   margin-bottom: 30px;
   transform: scale(1.5);
 }
 
-.timer-btns > button{
+.timer-btns > button {
   border-radius: 6px;
   font-weight: bold;
   cursor: pointer;
   background-color: #000;
-  color: #F5F5F5;
-  font-family: 'Karla', sans-serif;
-
+  color: #f5f5f5;
+  font-family: "Karla", sans-serif;
 }
 
-.roll-btn{
-  background-color: #5035FF;
-  color: #F5F5F5;
+.roll-btn {
+  background-color: #5035ff;
+  color: #f5f5f5;
   max-width: 110px;
   width: 100%;
   height: 50px;
@@ -89,19 +88,18 @@ main{
   font-size: 1.2rem;
   cursor: pointer;
   margin-bottom: 50px;
-  font-family: 'Karla', sans-serif;
+  font-family: "Karla", sans-serif;
 }
 
-.roll-btn:focus{
+.roll-btn:focus {
   outline: none;
 }
 
-.roll-btn:active{
+.roll-btn:active {
   box-shadow: inset 5px 5px 10px -3px rgba(0, 0, 0, 0.7);
 }
 
-
-.die-container{
+.die-container {
   display: grid;
   grid-template-rows: repeat(2, 1fr);
   grid-template-columns: repeat(5, 1fr);
@@ -110,7 +108,7 @@ main{
   margin-bottom: 55px;
 }
 
-.die{
+.die {
   max-width: 50px;
   height: 40px;
   padding: 40px;
@@ -121,7 +119,7 @@ main{
   cursor: pointer;
 }
 
-.dot{
+.dot {
   display: block;
   width: 16px;
   height: 16px;
@@ -129,26 +127,26 @@ main{
   background-color: #000;
 }
 
-.one{
+/* Dice Styles */
+
+.one {
   display: flex;
   gap: 8px;
   justify-content: center;
   align-items: center;
 }
 
-/*2*/
-.two{
+.two {
   display: flex;
   gap: 20px;
   justify-content: space-between;
 }
 
-.two .dot:nth-of-type(2){
+.two .dot:nth-of-type(2) {
   align-self: flex-end;
 }
 
-/*3*/
-.three{
+.three {
   display: flex;
   gap: 8px;
   justify-content: space-between;
@@ -162,11 +160,10 @@ main{
   align-self: center;
 }
 
-.three .dot:nth-of-type(3){
+.three .dot:nth-of-type(3) {
   align-self: flex-end;
 }
 
-/*4 + 5 + 6*/
 .four,
 .six,
 .five {
@@ -175,16 +172,17 @@ main{
   justify-content: space-between;
 }
 
-.four .column:nth-of-type(1){
+.four .column:nth-of-type(1) {
   gap: 20px;
 }
 
-.four, .six{
+.four,
+.six {
   gap: 22px;
 }
 
 .four .column,
-.five  .column,
+.five .column,
 .six .column {
   display: flex;
   gap: 10px;
@@ -196,24 +194,23 @@ main{
   justify-content: center;
 }
 
-.five .column:nth-of-type(1){
+.five .column:nth-of-type(1) {
   gap: 25px;
 }
 
-
 /*Media Queries*/
-@media (max-width: 855px){
+@media (max-width: 855px) {
   main {
     margin: 0 auto;
     max-width: 100%;
   }
 }
 
-@media (max-width: 708px){
+@media (max-width: 708px) {
   .die {
-  width: 40px;
-  height: 40px;
-  padding: 30px;
+    width: 40px;
+    height: 40px;
+    padding: 30px;
   }
 
   .dot {

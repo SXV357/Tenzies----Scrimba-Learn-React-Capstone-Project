@@ -64,12 +64,15 @@ export default function App() {
       );
       localStorage.setItem("time", JSON.stringify(initialTime / 1000));
     }
-  }, [newDice]);
+  }, [newDice, initialTime]);
 
   // User input(Clicking to hold a specific dice)
   // Procedure that contributes to the program's intended purpose
   // Return type: object with a modified isHeld property or default values
   function holdDice(id) {
+    if (!timerStart) {
+      setTimerStart(true);
+    }
     setNewDice((prevDice) => {
       return prevDice.map((die) => {
         if (die.id === id) {
