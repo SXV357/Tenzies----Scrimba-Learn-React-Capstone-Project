@@ -119,6 +119,23 @@ main {
   cursor: pointer;
 }
 
+.results{
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
+  display: flex;
+  flex-direction: column;
+  width: 650px;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  gap: 15px;
+}
+
+/* Dice Styles */
+/*The same source as cited in Die.js was utilized for general guidance from a perspective of how to utilize flexbox to style the dots on a given die*/
+
 .dot {
   display: block;
   width: 16px;
@@ -126,8 +143,6 @@ main {
   border-radius: 50%;
   background-color: #000;
 }
-
-/* Dice Styles */
 
 .one {
   display: flex;

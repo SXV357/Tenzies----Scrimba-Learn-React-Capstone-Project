@@ -3,10 +3,10 @@ import Die from "./Die";
 import { nanoid } from "nanoid";
 import "./style.css";
 import Confetti from "react-confetti";
+import Results from "./Results";
 
 export default function App() {
-  // List that manages complexity in the program
-  // At the start of each round, the values on all dice default to a random value from 1-6, and have a unique id associated with them
+  // Called when the "New Game button is hit"
   function allNewDice() {
     const newDiceArray = [];
     for (let i = 0; i < 10; i++) {
@@ -19,16 +19,12 @@ export default function App() {
     return newDiceArray;
   }
 
-  // Primary Purpose: Get all dice to hold the same value in as little time as possible
-
+  // State values
   const [newDice, setNewDice] = useState(allNewDice());
   const [tenzies, setTenzies] = useState(false);
   const [numRolls, setNumRolls] = useState(0);
   const [initialTime, setInitialTime] = useState(0);
   const [timerStart, setTimerStart] = useState(false);
-  const [bestTime, setBestTime] = useState(
-    JSON.parse(localStorage.getItem("time")) || 0
-  );
 
   useEffect(() => {
     let runTimer;
@@ -53,25 +49,13 @@ export default function App() {
     if (allHeld && allSame) {
       setTenzies(true);
       setTimerStart(false);
-      alert(
-        `You took ${Math.floor(
-          (initialTime / 60000) % 60
-        )} minutes, ${Math.floor(
-          (initialTime / 1000) % 60
-        )} seconds, and ${Math.floor(
-          (initialTime / 10) % 100
-        )} milliseconds to win the game`
-      );
-      localStorage.setItem("time", JSON.stringify(initialTime / 1000));
     }
-  }, [newDice, initialTime]);
+  }, [newDice]);
 
-  // User input(Clicking to hold a specific dice)
-  // Procedure that contributes to the program's intended purpose
   // Return type: object with a modified isHeld property or default values
   function holdDice(id) {
     if (!timerStart) {
-      setTimerStart(true);
+      setTimerStart(true); // if the user clicks on a die to start off with and not the timer
     }
     setNewDice((prevDice) => {
       return prevDice.map((die) => {
@@ -86,7 +70,6 @@ export default function App() {
   }
 
   // The value of a held dice doesn't change but if it isn't, it changes to a random number between 1 and 6
-  // Algorithm that includes sequencing/selection/iteration
   function rollDice() {
     setNewDice((oldDice) => {
       return oldDice.map((die) => {
@@ -113,15 +96,6 @@ export default function App() {
     }
   }
 
-  function genFunc() {
-    if (tenzies) {
-      newGame();
-    } else {
-      rollDice();
-      trackNumRolls();
-    }
-  }
-
   const diceElements = newDice.map((die) => (
     <Die
       handleClick={holdDice}
@@ -133,53 +107,68 @@ export default function App() {
   ));
 
   return (
-    // textual instructions for output specified at the top of the screen
-    <main>
-      {tenzies && <Confetti />}
-      <div className="description">
-        <h1 className="title">Tenzies</h1>
-        <p className="instructions">
-          Roll until all dice are the same. Click each die to freeze it at its
-          current value between rolls.
-        </p>
-      </div>
-      <div className="die-container">{diceElements}</div>
-      <div className="num-rolls">Number of Rolls: {numRolls}</div>
-      <div className="timer">
-        <span className="minutes">
-          {("0" + Math.floor((initialTime / 60000) % 60)).slice(-2)}:
-        </span>
-        <span className="seconds">
-          {("0" + Math.floor((initialTime / 1000) % 60)).slice(-2)}:
-        </span>
-        <span className="milliseconds">
-          {("0" + ((initialTime / 10) % 100)).slice(-2)}
-        </span>
-      </div>
-      <div className="timer-btns">
-        {!timerStart && initialTime === 0 && (
-          <button onClick={() => setTimerStart(true)} className="start-btn">
-            Start timer
-          </button>
-        )}
-        {initialTime !== 0 && (
-          <button onClick={() => setTimerStart(false)} className="stop-btn">
-            Stop timer
-          </button>
-        )}
-        {initialTime !== 0 && (
-          <button onClick={() => setTimerStart(true)} className="reset-btn">
-            Resume timer
-          </button>
-        )}
-        {initialTime !== 0 && (
-          <button onClick={() => setInitialTime(0)}>Reset Timer</button>
-        )}
-      </div>
+    <>
+      {tenzies ? (
+        <>
+          <Results initialTime={initialTime} newGame={newGame} />
+          <Confetti />
+        </>
+      ) : (
+        <main>
+          <div className="description">
+            <h1 className="title">Tenzies</h1>
+            <p className="instructions">
+              Roll until all dice are the same. Click each die to freeze it at
+              its current value between rolls.
+            </p>
+          </div>
+          <div className="die-container">{diceElements}</div>
+          <div className="num-rolls">Number of Rolls: {numRolls}</div>
+          <div className="timer">
+            <span className="minutes">
+              {("0" + Math.floor((initialTime / 60000) % 60)).slice(-2)}:
+            </span>
+            <span className="seconds">
+              {("0" + Math.floor((initialTime / 1000) % 60)).slice(-2)}:
+            </span>
+            <span className="milliseconds">
+              {("0" + ((initialTime / 10) % 100)).slice(-2)}
+            </span>
+          </div>
+          <div className="timer-btns">
+            {!timerStart && initialTime === 0 && (
+              <button onClick={() => setTimerStart(true)} className="start-btn">
+                Start timer
+              </button>
+            )}
+            {initialTime !== 0 && (
+              <button onClick={() => setTimerStart(false)} className="stop-btn">
+                Stop timer
+              </button>
+            )}
+            {initialTime !== 0 && (
+              <button onClick={() => setTimerStart(true)} className="reset-btn">
+                Resume timer
+              </button>
+            )}
+            {initialTime !== 0 && (
+              <button onClick={() => setInitialTime(0)}>Reset Timer</button>
+            )}
+          </div>
 
-      <button onClick={genFunc} className="roll-btn">
-        {tenzies ? "New Game" : "Roll"}
-      </button>
-    </main>
+          <button
+            onClick={() => {
+              if (!tenzies) {
+                rollDice();
+                trackNumRolls();
+              }
+            }}
+            className="roll-btn"
+          >
+            Roll
+          </button>
+        </main>
+      )}
+    </>
   );
 }
