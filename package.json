@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "nanoid": "^4.0.0",
-    "react-confetti": "^6.1.0"
-  }
-}
