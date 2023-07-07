@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Die from "./Die";
 import { nanoid } from "nanoid";
 import "./style.css";
-import Confetti from "react-confetti";
 import Results from "./Results";
 
 export default function App() {
@@ -25,6 +24,17 @@ export default function App() {
   const [numRolls, setNumRolls] = useState(0);
   const [initialTime, setInitialTime] = useState(0);
   const [timerStart, setTimerStart] = useState(false);
+  const [bestTime, setBestTime] = useState(
+    JSON.parse(localStorage.getItem("leastTime")) || 0
+  );
+  const [bestRolls, setBestRolls] = useState(
+    JSON.parse(localStorage.getItem("bestRolls")) || 0
+  );
+
+  useEffect(() => {
+    localStorage.setItem("leastTime", JSON.stringify(bestTime));
+    localStorage.setItem("bestRolls", JSON.stringify(bestRolls));
+  }, [bestTime, bestRolls])
 
   useEffect(() => {
     let runTimer;
@@ -47,10 +57,16 @@ export default function App() {
     const allHeld = newDice.every((die) => die.isHeld);
     const allSame = newDice.every((die) => die.value === newDice[0].value);
     if (allHeld && allSame) {
-      setTenzies(true);
+      if (numRolls < bestRolls || bestRolls === 0){
+        setBestRolls(numRolls);
+      }
+      if (initialTime < bestTime || bestTime === 0){
+        setBestTime(initialTime);
+      }
+      setTenzies(true); // game is over
       setTimerStart(false);
     }
-  }, [newDice]);
+  }, [newDice, bestRolls, bestTime, initialTime, numRolls]);
 
   // Return type: object with a modified isHeld property or default values
   function holdDice(id) {
@@ -110,8 +126,7 @@ export default function App() {
     <>
       {tenzies ? (
         <>
-          <Results initialTime={initialTime} newGame={newGame} />
-          <Confetti />
+          <Results initialTime={bestTime} newGame={newGame} bestRolls = {bestRolls} />
         </>
       ) : (
         <main>
@@ -142,20 +157,16 @@ export default function App() {
               </button>
             )}
             {initialTime !== 0 && (
-              <button onClick={() => setTimerStart(false)} className="stop-btn">
+              <button onClick={() => setTimerStart(false)} className="stop-btn" disabled = {!timerStart}>
                 Stop timer
               </button>
             )}
             {initialTime !== 0 && (
-              <button onClick={() => setTimerStart(true)} className="reset-btn">
+              <button onClick={() => setTimerStart(true)} className="resume-btn" disabled = {timerStart}>
                 Resume timer
               </button>
             )}
-            {initialTime !== 0 && (
-              <button onClick={() => setInitialTime(0)}>Reset Timer</button>
-            )}
           </div>
-
           <button
             onClick={() => {
               if (!tenzies) {
@@ -164,6 +175,7 @@ export default function App() {
               }
             }}
             className="roll-btn"
+            disabled = {initialTime === 0}
           >
             Roll
           </button>
